@@ -1,0 +1,42 @@
+{
+  "name": "small-social-media-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": ">=20.6.0"
+  },
+  "scripts": {
+    "test": "npm run test",
+    "dev": "nodemon -r tsconfig-paths/register index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/francofrati/small-social-media-server.git"
+  },
+  "author": "francofrati",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/francofrati/small-social-media-server/issues"
+  },
+  "homepage": "https://github.com/francofrati/small-social-media-server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pg": "^8.11.4"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^20.12.2",
+    "@types/nodemon": "^1.19.6",
+    "@types/pg": "^8.11.4",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.4.3"
+  }
+}

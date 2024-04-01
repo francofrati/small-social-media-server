@@ -1,0 +1,20 @@
+import express from "express";
+import cors from "cors";
+
+import appRouter from "@/routes";
+import morgan from "morgan";
+
+const app = express();
+
+// Middleware
+app.use(morgan("dev"));
+app.use(cors());
+app.use(express.json());
+
+app.get("/", (_req, res) => {
+  res.send("Small Social Media Server v0");
+});
+
+app.use("/", appRouter);
+
+export default app;
