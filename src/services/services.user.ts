@@ -16,9 +16,9 @@ export const getUserFollowers = async (email: string) => {
     left join "User" u on u."id" = uf."userId"
     where ue."email" = '${email}'
     `
-  )
-  return rows
-}
+  );
+  return rows;
+};
 
 export const getUserFolloweds = async (email: string) => {
   const { rows } = await pool.query(
@@ -28,9 +28,9 @@ export const getUserFolloweds = async (email: string) => {
     left join "User" u on u."id" = uf."followedId"
     where ue."email" = '${email}'
     `
-  )
-  return rows
-}
+  );
+  return rows;
+};
 
 export const getFollowRequests = async (email: string) => {
   const { rows } = await pool.query(
@@ -40,6 +40,15 @@ export const getFollowRequests = async (email: string) => {
     left join "User" u on u."id" = uf."followerId"
     where ue."email" = '${email}'
     `
-  )
-  return rows
-}
+  );
+  return rows;
+};
+
+export const getUserIdByEmail = async (email: string) => {
+  const { rows } = await pool.query(`
+    select u."id" from "UserEmail" ue
+    left join "User" u on u."id" = ue."userId"
+    where ue."email" = '${email}'
+  `);
+  return rows.length ? rows[0].id : undefined;
+};
