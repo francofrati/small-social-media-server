@@ -1,12 +1,21 @@
 import { Router } from "express";
 
-import { commentPostController, getPostCommentsController } from '@/controllers/constroller.post'
+import {
+  commentPostController,
+  getPostCommentsController,
+  getPostLikesController,
+  likePostController,
+} from "@/controllers/constroller.post";
 import { verifySession } from "@/controllers/controller.auth";
 
-const router = Router()
+const router = Router();
 
-router.post('/comment', verifySession, commentPostController)
+router.post("/comment", verifySession, commentPostController);
 
-router.get('/:postId/comments', verifySession, getPostCommentsController)
+router.post("/like", verifySession, likePostController);
 
-export default router
+router.get("/:postId/comments", verifySession, getPostCommentsController);
+
+router.get("/:postId/likes", verifySession, getPostLikesController);
+
+export default router;
