@@ -1,8 +1,12 @@
 import {
   getChatByChatRoomId,
   getUserChatsForChatBox,
+  sendMessage,
 } from "@/services/services.chat";
-import { getUserIdByEmail } from "@/services/services.user";
+import {
+  getUserIdByEmail,
+  getUserIdByUsername,
+} from "@/services/services.user";
 import { ChatRoomId } from "@/types";
 import { getEmailFromSessionToken } from "@/utils/utils";
 import { Request, Response } from "express";
@@ -34,6 +38,36 @@ export const getChatController = async (
 
     const chat = await getChatByChatRoomId(chatRoomId);
     res.send(chat);
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
+};
+
+export const sendMessageController = async (
+  req: Request<
+    { chatRoomId: string },
+    any,
+    { receiverUsername: string; content: string }
+  >,
+  res: Response
+) => {
+  try {
+    const sessionToken = req.cookies["sessiontoken"];
+
+    const userEmail = getEmailFromSessionToken(sessionToken);
+
+    if (!userEmail) throw Error("Invalid user");
+
+    const senderId = await getUserIdByEmail(userEmail);
+
+    const { chatRoomId } = req.params;
+    const { receiverUsername, content } = req.body;
+
+    const receiverId = await getUserIdByUsername(receiverUsername);
+
+    await sendMessage(chatRoomId, senderId, receiverId, content);
+
+    res.send("ok");
   } catch (error: any) {
     res.status(500).send(error.message);
   }

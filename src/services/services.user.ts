@@ -2,7 +2,7 @@ import { pool } from "@/db/config";
 
 export const getUserInfoByEmail = async (email: string) => {
   const { rows } = await pool.query(
-    `select u."firstName", u."lastName", u."profileImg", u."birthDate", ue."email" from "UserEmail" ue left join "User" u on ue."userId"=u."id" where ue."email"='${email}'`
+    `select u."firstName", u."lastName", u."profileImg", u."birthDate", u."username", ue."email" from "UserEmail" ue left join "User" u on ue."userId"=u."id" where ue."email"='${email}'`
   );
   const userInfo = rows[0];
   return userInfo;
@@ -49,6 +49,14 @@ export const getUserIdByEmail = async (email: string) => {
     select u."id" from "UserEmail" ue
     left join "User" u on u."id" = ue."userId"
     where ue."email" = '${email}'
+  `);
+  return rows.length ? rows[0].id : undefined;
+};
+
+export const getUserIdByUsername = async (username: string) => {
+  const { rows } = await pool.query(`
+    select "id" from "User"
+    where "username" = '${username}'
   `);
   return rows.length ? rows[0].id : undefined;
 };
